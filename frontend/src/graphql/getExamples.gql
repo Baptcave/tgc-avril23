@@ -1,0 +1,6 @@
+query ExamplesQuery {
+  examples {
+    id
+    name
+  }
+}

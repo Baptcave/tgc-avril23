@@ -1,0 +1,9 @@
+{
+  "name": "the-good-corner",
+  "version": "1.0.0",
+  "description": "Just ads",
+  "scripts": {
+    "db": "docker compose up db"
+  },
+  "license": "ISC"
+}
