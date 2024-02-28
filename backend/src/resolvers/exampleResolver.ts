@@ -1,17 +1,16 @@
 import { Resolver, Query, Arg, Mutation } from "type-graphql";
-import { Example, NewExampleInput } from "../entities/example";
+//import { Example, NewExampleInput } from "../entities/example";
 
-@Resolver(Example)
+@Resolver()
 class ExampleResolver {
-  @Query(() => [Example])
+  @Query(() => String)
   async examples() {
-    return Example.find();
+    return "ok";
   }
 
-  @Mutation(() => Example)
-  async createExample(@Arg("data", { validate: true }) data: NewExampleInput) {
-    console.log("recieved : ", { data });
-    return Example.create({ name: data.name }).save();
+  @Mutation(() => String)
+  async createExample() {
+    return "ok";
   }
 }
 
