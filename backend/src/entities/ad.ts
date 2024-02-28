@@ -69,4 +69,3 @@ export class NewTagInput {
   name: string;
 }
 */
-0;
