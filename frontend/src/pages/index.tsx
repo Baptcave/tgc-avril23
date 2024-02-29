@@ -1,35 +1,20 @@
+import AdCard from "@/components/AdCard";
 import Layout from "@/components/Layout";
-import {
-  useCreateExampleMutation,
-  useExamplesQueryQuery,
-} from "@/graphql/generated/schema";
-import { FormEvent } from "react";
+import { useAdsQuery } from "@/graphql/generated/schema";
 
 export default function Home() {
-  const [createExample] = useCreateExampleMutation();
-  const { data, refetch } = useExamplesQueryQuery();
-  const examples = data?.examples || [];
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const formJSON: any = Object.fromEntries(formData.entries());
-    await createExample({ variables: { data: { ...formJSON } } });
-    refetch();
-  };
+  const { data } = useAdsQuery();
 
   return (
     <Layout title="Accueil - TGC">
-      <h1 className="pt-4"> New example :</h1>
-
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" id="name" />
-        <button type="submit">Save</button>
-      </form>
-
-      {examples.map((ex) => (
-        <li key={ex.id}>{ex.name}</li>
-      ))}
+      <h1 className="pt-4 pb-4 text-lg"> Annonces récentes</h1>
+      <div className="flex flex-wrap">
+        {typeof data === "undefined"
+          ? "chargement"
+          : data.ads.map((a) => {
+              return <AdCard key={a.id} ad={a} link={`/ads/${a.id}`} />;
+            })}
+      </div>
     </Layout>
   );
 }

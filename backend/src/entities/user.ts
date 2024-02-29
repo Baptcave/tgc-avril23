@@ -36,7 +36,6 @@ export class User extends BaseEntity {
   avatar: string;
 
   @Column()
-  @Field()
   hashedPassword: string;
 
   @Column({ type: "enum", enum: UserRole, default: UserRole.VISITOR })

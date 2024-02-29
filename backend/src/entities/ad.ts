@@ -51,13 +51,16 @@ export class Ad extends BaseEntity {
   price: number;
 
   @ManyToOne(() => Category, (category) => category.ads)
+  @Field()
   category: Category;
 
   @ManyToOne(() => User, (user) => user.ads)
+  @Field()
   owner: User;
 
   @ManyToMany(() => Tag, (t) => t.ads, { cascade: true })
   @JoinTable()
+  @Field(() => [Tag])
   tags: Tag[];
 }
 
