@@ -1,4 +1,4 @@
 import { buildSchema } from "type-graphql";
-import ExampleResolver from "./resolvers/exampleResolver";
+import AdResolver from "./resolvers/adResolver";
 
-export default buildSchema({ resolvers: [ExampleResolver] });
+export default buildSchema({ resolvers: [AdResolver] });
