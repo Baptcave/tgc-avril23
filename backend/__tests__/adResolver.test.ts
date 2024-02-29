@@ -1,10 +1,9 @@
 import gql from "graphql-tag";
 import { execute } from "../jest.setup";
-import db from "../src/db";
 import { Ad } from "../src/entities/ad";
 import { Category } from "../src/entities/category";
 import { Tag } from "../src/entities/tag";
-import { User } from "../src/entities/user";
+import { User, UserRole } from "../src/entities/user";
 
 describe("Ad Resolver", () => {
   it("can return a list of ads", async () => {
@@ -91,6 +90,74 @@ describe("Ad Resolver", () => {
       "title": "Ferrari",
     },
   ],
+}
+`);
+  });
+
+  it("can create an ad", async () => {
+    await User.create({
+      email: "test@test.com",
+      avatar: "yzeduzeygef",
+      nickname: "ekruhfiuerhf",
+      role: UserRole.VISITOR,
+      hashedPassword: "eofiheiorhg",
+    }).save();
+    const cat = await Category.create({ name: "mycat" }).save();
+    const res = await execute(
+      gql`
+        mutation Mutation($data: NewAdInput!) {
+          createAd(data: $data) {
+            id
+            title
+            description
+            location
+            picture
+            price
+            category {
+              id
+              name
+            }
+            owner {
+              id
+              email
+            }
+          }
+        }
+      `,
+      {
+        data: {
+          title: "mon annonce",
+          description: "desc",
+          picture: "http://img.com/i.png",
+          price: 42,
+          location: "Lyon",
+          category: {
+            id: cat.id,
+          },
+        },
+      }
+    );
+
+    expect(res).toMatchInlineSnapshot(`
+{
+  "data": {
+    "createAd": {
+      "category": {
+        "id": 1,
+        "name": "mycat",
+      },
+      "description": "desc",
+      "id": 1,
+      "location": "Lyon",
+      "owner": {
+        "email": "test@test.com",
+        "id": 1,
+      },
+      "picture": "http://img.com/i.png",
+      "price": 42,
+      "title": "mon annonce",
+    },
+  },
 }
 `);
   });
