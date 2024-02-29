@@ -13,111 +13,95 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTimeISO: any;
 };
 
-export type Example = {
-  __typename?: 'Example';
+export type Ad = {
+  __typename?: 'Ad';
+  category: Category;
+  createdAt: Scalars['DateTimeISO'];
+  description: Scalars['String'];
+  id: Scalars['Int'];
+  location: Scalars['String'];
+  owner: User;
+  picture: Scalars['String'];
+  price: Scalars['Float'];
+  tags: Array<Tag>;
+  title: Scalars['String'];
+  updatedAt: Scalars['DateTimeISO'];
+};
+
+export type Category = {
+  __typename?: 'Category';
   id: Scalars['Int'];
   name: Scalars['String'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createExample: Example;
-};
-
-
-export type MutationCreateExampleArgs = {
-  data: NewExampleInput;
-};
-
-export type NewExampleInput = {
-  name: Scalars['String'];
+  createAd: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  examples: Array<Example>;
+  ads: Array<Ad>;
 };
 
-export type CreateExampleMutationVariables = Exact<{
-  data: NewExampleInput;
-}>;
+export type Tag = {
+  __typename?: 'Tag';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
+  avatar: Scalars['String'];
+  email: Scalars['String'];
+  id: Scalars['Int'];
+  nickname: Scalars['String'];
+  role: Scalars['String'];
+};
+
+export type AdsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CreateExampleMutation = { __typename?: 'Mutation', createExample: { __typename?: 'Example', id: number } };
-
-export type ExamplesQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type AdsQuery = { __typename?: 'Query', ads: Array<{ __typename?: 'Ad', id: number, title: string, price: number, picture: string }> };
 
 
-export type ExamplesQueryQuery = { __typename?: 'Query', examples: Array<{ __typename?: 'Example', id: number, name: string }> };
-
-
-export const CreateExampleDocument = gql`
-    mutation CreateExample($data: NewExampleInput!) {
-  createExample(data: $data) {
+export const AdsDocument = gql`
+    query Ads {
+  ads {
     id
-  }
-}
-    `;
-export type CreateExampleMutationFn = Apollo.MutationFunction<CreateExampleMutation, CreateExampleMutationVariables>;
-
-/**
- * __useCreateExampleMutation__
- *
- * To run a mutation, you first call `useCreateExampleMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateExampleMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createExampleMutation, { data, loading, error }] = useCreateExampleMutation({
- *   variables: {
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useCreateExampleMutation(baseOptions?: Apollo.MutationHookOptions<CreateExampleMutation, CreateExampleMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateExampleMutation, CreateExampleMutationVariables>(CreateExampleDocument, options);
-      }
-export type CreateExampleMutationHookResult = ReturnType<typeof useCreateExampleMutation>;
-export type CreateExampleMutationResult = Apollo.MutationResult<CreateExampleMutation>;
-export type CreateExampleMutationOptions = Apollo.BaseMutationOptions<CreateExampleMutation, CreateExampleMutationVariables>;
-export const ExamplesQueryDocument = gql`
-    query ExamplesQuery {
-  examples {
-    id
-    name
+    title
+    price
+    picture
   }
 }
     `;
 
 /**
- * __useExamplesQueryQuery__
+ * __useAdsQuery__
  *
- * To run a query within a React component, call `useExamplesQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useExamplesQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useAdsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useExamplesQueryQuery({
+ * const { data, loading, error } = useAdsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useExamplesQueryQuery(baseOptions?: Apollo.QueryHookOptions<ExamplesQueryQuery, ExamplesQueryQueryVariables>) {
+export function useAdsQuery(baseOptions?: Apollo.QueryHookOptions<AdsQuery, AdsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ExamplesQueryQuery, ExamplesQueryQueryVariables>(ExamplesQueryDocument, options);
+        return Apollo.useQuery<AdsQuery, AdsQueryVariables>(AdsDocument, options);
       }
-export function useExamplesQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExamplesQueryQuery, ExamplesQueryQueryVariables>) {
+export function useAdsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AdsQuery, AdsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ExamplesQueryQuery, ExamplesQueryQueryVariables>(ExamplesQueryDocument, options);
+          return Apollo.useLazyQuery<AdsQuery, AdsQueryVariables>(AdsDocument, options);
         }
-export type ExamplesQueryQueryHookResult = ReturnType<typeof useExamplesQueryQuery>;
-export type ExamplesQueryLazyQueryHookResult = ReturnType<typeof useExamplesQueryLazyQuery>;
-export type ExamplesQueryQueryResult = Apollo.QueryResult<ExamplesQueryQuery, ExamplesQueryQueryVariables>;
+export type AdsQueryHookResult = ReturnType<typeof useAdsQuery>;
+export type AdsLazyQueryHookResult = ReturnType<typeof useAdsLazyQuery>;
+export type AdsQueryResult = Apollo.QueryResult<AdsQuery, AdsQueryVariables>;

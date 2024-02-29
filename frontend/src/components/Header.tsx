@@ -46,6 +46,8 @@ export default function Header() {
         </form>
       </div>
       <nav className="flex pl-2 h-[54px]">
+        <Link href="/about">a propos</Link>
+
         {categories.map((cat) => {
           const [firstLetter, ...resetOfCatName] = cat.name.split("");
           const catName = firstLetter.toUpperCase() + resetOfCatName.join("");
