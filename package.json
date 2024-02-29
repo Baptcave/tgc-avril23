@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Just ads",
   "scripts": {
-    "db": "docker compose up db"
+    "db": "docker compose up db",
+    "testDB": "docker compose -f docker-compose.testDB.yml up testDB"
   },
   "license": "ISC"
 }

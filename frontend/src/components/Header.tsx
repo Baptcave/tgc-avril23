@@ -1,12 +1,11 @@
+import { useCategoriesQuery } from "@/graphql/generated/schema";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function Header() {
   const router = useRouter();
-  const categories = [
-    { id: 1, name: "Informatique" },
-    { id: 2, name: "Sport" },
-  ];
+  const { data } = useCategoriesQuery();
+  const categories = data?.categories || [];
 
   return (
     <header className="header">
@@ -46,8 +45,6 @@ export default function Header() {
         </form>
       </div>
       <nav className="flex pl-2 h-[54px]">
-        <Link href="/about">a propos</Link>
-
         {categories.map((cat) => {
           const [firstLetter, ...resetOfCatName] = cat.name.split("");
           const catName = firstLetter.toUpperCase() + resetOfCatName.join("");
