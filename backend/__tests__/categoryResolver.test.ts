@@ -25,10 +25,6 @@ describe("Category Resolver", () => {
     },
     {
       "id": 2,
-      "name": "automobile",
-    },
-    {
-      "id": 3,
       "name": "sport",
     },
   ],

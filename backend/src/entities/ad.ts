@@ -14,6 +14,7 @@ import { Tag } from "./tag";
 import { Length } from "class-validator";
 import { ObjectType, Field, Int, InputType } from "type-graphql";
 import { Category } from "./category";
+import { ObjectId } from "../utils";
 
 @Entity()
 @ObjectType()
@@ -64,11 +65,25 @@ export class Ad extends BaseEntity {
   tags: Tag[];
 }
 
-/*
 @InputType()
-export class NewTagInput {
+export class NewAdInput {
   @Field()
   @Length(3, 50)
-  name: string;
+  title: string;
+
+  @Field()
+  @Length(0, 1000)
+  description: string;
+
+  @Field()
+  picture: string;
+
+  @Field()
+  price: number;
+
+  @Field()
+  location: string;
+
+  @Field(() => ObjectId)
+  category: ObjectId;
 }
-*/
