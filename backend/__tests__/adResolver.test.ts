@@ -6,7 +6,7 @@ import { Category } from "../src/entities/category";
 import { Tag } from "../src/entities/tag";
 import { User } from "../src/entities/user";
 
-describe("Example Resolver", () => {
+describe("Ad Resolver", () => {
   it("can return a list of ads", async () => {
     const automobile = await Category.create({ name: "automobile" }).save();
     const tag1 = await Tag.create({ name: "tag1" }).save();
@@ -37,8 +37,6 @@ describe("Example Resolver", () => {
         ads {
           id
           title
-          createdAt
-          updatedAt
           location
           picture
           price
@@ -69,7 +67,6 @@ describe("Example Resolver", () => {
         "id": 1,
         "name": "automobile",
       },
-      "createdAt": "2024-02-29T08:13:40.704Z",
       "id": 1,
       "location": "Paris",
       "owner": {
@@ -92,7 +89,6 @@ describe("Example Resolver", () => {
         },
       ],
       "title": "Ferrari",
-      "updatedAt": "2024-02-29T08:13:40.704Z",
     },
   ],
 }
