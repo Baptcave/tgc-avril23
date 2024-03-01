@@ -130,7 +130,7 @@ docker exec -it tgc-avril23-backend-1 sh
 sh scripts/install_caddy.sh
 ```
 
-### 10. Configure Caddy
+## 10. Configure Caddy
 
 ```sh
 sudo nano /etc/caddy/Caddyfile
