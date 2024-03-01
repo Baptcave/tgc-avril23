@@ -111,13 +111,13 @@ npm run start:prod
 
 ## 8. Init the DB
 
-sh into the backend container and run the resetDB script and exit
+sh into the backend container, run the resetDB script and exit :
 
 ```sh
 docker exec -it tgc-avril23-backend-1 sh
 ```
 
-In the container :
+(once in the container :)
 
 ```sh
 /app # NODE_ENV=development npm run resetDB
