@@ -5,7 +5,9 @@
   "scripts": {
     "db": "docker compose up db",
     "testDB": "docker compose -f docker-compose.testDB.yml up testDB",
-    "start:prod": "docker compose -f docker-compose.production.yml up --build"
+    "dev": "docker compose up",
+    "start:prod": "docker compose -f docker-compose.production.yml up --build --remove-orphans -d",
+    "stop:prod": "docker compose -f docker-compose.production.yml down"
   },
   "license": "ISC"
 }
