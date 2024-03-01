@@ -1,0 +1,16 @@
+name: tests-front
+
+on:
+  pull_request:
+  workflow_call:
+
+jobs:
+  test-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: "Install npm and deps"
+        run: cd frontend && npm i
+      - name: Goto frontend and run tests
+        run: cd frontend && npm run test
