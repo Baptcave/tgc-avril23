@@ -59,7 +59,7 @@ If you don't have a domain name yet, here's [a free DNS provider](https://www.du
 
 ## 2. ssh into your VPS from your machine
 
-Check your inbox and retrieve the SSH credentials to connect to your VPS you just bought/rented.
+Check your inbox and retrieve the SSH credentials to connect to your VPS.
 
 ```sh
 ssh user@domain.duckdns.com
