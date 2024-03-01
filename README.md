@@ -53,7 +53,8 @@ Buy or rent a VPS on Ubuntu 22.04. Here's a few options :
 
 ### 1.2 Domain
 
-If you don't have a domain name yet, here's a free DNS provider : https://www.duckdns.org/
+If you don't have a domain name yet, here's [a free DNS provider](https://www.duckdns.org)
+
 [![DNS](https://i.imgur.com/0eGZOai.png)](https://i.imgur.com/0eGZOai.png)
 
 ## 2. ssh into your VPS from your machine
