@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "Just ads",
   "scripts": {
+    "dev": "docker compose up",
+    "start:prod": "docker compose -f docker-compose.production.yml up --build --remove-orphans -d",
+    "stop:prod": "docker compose -f docker-compose.production.yml down",
     "db": "docker compose up db",
     "testDB": "docker compose -f docker-compose.integration-tests.yml up testDB",
-    "integration-tests": "docker compose -f docker-compose.integration-tests.yml up --build --exit-code-from testrunner",
-    "start:prod": "docker compose -f docker-compose.production.yml up --build"
+    "integration-tests": "docker compose -f docker-compose.integration-tests.yml up --build --exit-code-from testrunner"
   },
   "license": "ISC"
 }
