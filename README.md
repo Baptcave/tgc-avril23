@@ -49,7 +49,7 @@ npm run dev
 Buy or rent a VPS on Ubuntu 22.04. Here's a few options :
 
 - [Contabo](https://contabo.com/en/vps/cloud-vps-1/?image=ubuntu.323&qty=1&contract=1&storage-type=vps1-100-gb-nvme)
-- [https://www.ovh.com/fr/order/vps/?v=3&\_gl=1*dbt12s*\_gcl_aw*R0NMLjE3MDkzMDA5MjguQ2p3S0NBaUFsb2F2QmhCT0Vpd0FidEFKTzV3Um1rS1p3anZfSXF1ZlBxanVOQk1yZzBsWGpQRTRlSnJHLXlnX1VmSHdmWnBhNkd2RmxSb0NTRFlRQXZEX0J3RQ..*\_gcl_au\*MTQ2NzQyNTYxNi4xNzA5MzAwODk3#/vps/build?selection=~(range~'VLE-2~pricingMode~'default~flavor~'vps-le-2-2-40~os~'ubuntu_22_04~datacenters~(GRA~1)~duration~'P1M)](OVH)
+- [OVH](<https://www.ovh.com/fr/order/vps/?v=3&_gl=1*dbt12s*_gcl_aw*R0NMLjE3MDkzMDA5MjguQ2p3S0NBaUFsb2F2QmhCT0Vpd0FidEFKTzV3Um1rS1p3anZfSXF1ZlBxanVOQk1yZzBsWGpQRTRlSnJHLXlnX1VmSHdmWnBhNkd2RmxSb0NTRFlRQXZEX0J3RQ..*_gcl_au*MTQ2NzQyNTYxNi4xNzA5MzAwODk3#/vps/build?selection=~(range~'VLE-2~pricingMode~'default~flavor~'vps-le-2-2-40~os~'ubuntu_22_04~datacenters~(GRA~1)~duration~'P1M)>)
 
 ### 1.2 Domain
 
