@@ -1,0 +1,46 @@
+name: integration-tests
+
+on:
+  pull_request:
+  workflow_call:
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+
+    container: node:10.18-jessie
+
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      testDB:
+        # Docker Hub image
+        image: postgres:15-alpine
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: "Install npm and deps"
+        run: cd backend && npm i
+      - name: Goto frontend and run tests
+        run: cd backend && npm run test
+        env:
+          JWT_PRIVATE_KEY: zeyfgzeigfyzegfyuzegf
+          NODE_ENV: "test"
+          CORS_ALLOWED_ORIGINS: "http://localhost:3000,http://localhost:4001"
+          SERVER_HOST: "localhost"
+          SERVER_PORT: "4001"
+          DB_HOST: testDB
+          DB_USER: postgres
+          DB_PASS: postgres
+          DB_NAME: postgres
+          DB_PORT: 5432
