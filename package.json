@@ -4,7 +4,8 @@
   "description": "Just ads",
   "scripts": {
     "db": "docker compose up db",
-    "testDB": "docker compose -f docker-compose.testDB.yml up testDB"
+    "testDB": "docker compose -f docker-compose.testDB.yml up testDB",
+    "start:prod": "docker compose -f docker-compose.production.yml up --build"
   },
   "license": "ISC"
 }
