@@ -1,7 +1,7 @@
 {
   "name": "the-good-corner",
   "version": "1.0.0",
-  "description": "Just ads. Craigslist-like app.",
+  "description": "Just ads",
   "scripts": {
     "dev": "docker compose up",
     "start:prod": "docker compose -f docker-compose.production.yml up --build --remove-orphans -d",
