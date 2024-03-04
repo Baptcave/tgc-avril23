@@ -8,7 +8,7 @@ import {
 import { Length, IsEmail } from "class-validator";
 import { ObjectType, Field, Int, InputType } from "type-graphql";
 import { Ad } from "./ad";
-import { argon2id, hash } from "argon2";
+import { hash, verify } from "argon2";
 
 export enum UserRole {
   ADMIN = "admin",
@@ -64,6 +64,22 @@ export class NewUserInput {
   nickname: string;
 }
 
+@InputType()
+export class LoginUserInput {
+  @Field()
+  @IsEmail()
+  @Length(3, 100)
+  email: string;
+
+  @Field()
+  @Length(8, 50)
+  password: string;
+}
+
 export async function hashPassword(password: string) {
   return hash(password);
+}
+
+export async function verifyPassword(hashedPassword: string, password: string) {
+  return verify(hashedPassword, password);
 }
