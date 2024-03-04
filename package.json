@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Just ads",
   "scripts": {
-    "dev": "docker compose up",
+    "dev": "docker compose up --build",
     "start:prod": "docker compose -f docker-compose.production.yml up --build --remove-orphans -d",
     "stop:prod": "docker compose -f docker-compose.production.yml down",
     "db": "docker compose up db",
