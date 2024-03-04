@@ -10,10 +10,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-
       - name: Make envfile
         run: |
           echo JWT_PRIVATE_KEY=zeyfgzeigfyzegfyuzegf >> ./backend/.env
           echo NODE_ENV=test >> ./backend/.env
+          echo CORS_ALLOWED_ORIGINS=http://localhost:3000 >> ./backend/.env
       - name: Run tests
         run: npm run integration-tests
