@@ -1,10 +1,11 @@
-import { Resolver, Query, Arg, Mutation, Ctx } from "type-graphql";
+import { Resolver, Query, Arg, Mutation, Ctx, Authorized } from "type-graphql";
 import {
   NewUserInput,
   User,
   hashPassword,
   LoginUserInput,
   verifyPassword,
+  UserRole,
 } from "../entities/user";
 import jwt from "jsonwebtoken";
 import env from "../env";
@@ -55,6 +56,18 @@ class UserResolver {
     });
 
     return token;
+  }
+
+  @Authorized([UserRole.ADMIN, UserRole.VISITOR])
+  @Query(() => User)
+  async profile(@Ctx() ctx: ContextType) {
+    return ctx?.currentUser;
+  }
+
+  @Mutation(() => Boolean)
+  async logout(@Ctx() ctx: ContextType) {
+    ctx.res.clearCookie("token");
+    return true;
   }
 }
 
