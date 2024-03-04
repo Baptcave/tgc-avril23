@@ -8,7 +8,6 @@ export default function Login() {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const formJSON: any = Object.fromEntries(formData.entries());
-    console.log({ formJSON });
     await loginUser({ variables: { data: formJSON } });
     alert("merci !");
   };
