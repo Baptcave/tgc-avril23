@@ -6,10 +6,12 @@ import {
   LoginUserInput,
   verifyPassword,
   UserRole,
+  UpdateUserInput,
 } from "../entities/user";
 import jwt from "jsonwebtoken";
 import env from "../env";
 import { ContextType } from "../types";
+import { UnauthenticatedError } from "../utils";
 
 @Resolver()
 class UserResolver {
@@ -58,16 +60,36 @@ class UserResolver {
     return token;
   }
 
-  @Authorized([UserRole.ADMIN, UserRole.VISITOR])
+  @Authorized()
   @Query(() => User)
   async profile(@Ctx() ctx: ContextType) {
-    return ctx?.currentUser;
+    return User.findOneOrFail({
+      where: { id: ctx?.currentUser?.id },
+      relations: { ads: true },
+    });
   }
 
   @Mutation(() => Boolean)
   async logout(@Ctx() ctx: ContextType) {
     ctx.res.clearCookie("token");
     return true;
+  }
+
+  @Authorized()
+  @Mutation(() => User)
+  async updateProfile(
+    @Ctx() ctx: ContextType,
+    @Arg("data", { validate: true }) data: UpdateUserInput
+  ) {
+    if (!ctx.currentUser) throw UnauthenticatedError();
+    Object.assign(
+      ctx.currentUser,
+      Object.keys(data).reduce((acc: any, prop: any) => {
+        if (!!(data as any)[prop]) acc[prop] = (data as any)[prop];
+        return acc;
+      }, {})
+    );
+    return ctx.currentUser.save();
   }
 }
 

@@ -13,6 +13,8 @@ export default buildSchema({
     const cookies = cookie.parse(context.req.headers.cookie || "");
     const token = cookies.token;
 
+    console.log({ cookies }, context.req.headers);
+
     try {
       const decoded = jwt.verify(token, env.JWT_PRIVATE_KEY) as any;
       const id = decoded.userId;

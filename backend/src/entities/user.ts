@@ -5,7 +5,7 @@ import {
   Column,
   OneToMany,
 } from "typeorm";
-import { Length, IsEmail } from "class-validator";
+import { Length, IsEmail, IsUrl } from "class-validator";
 import { ObjectType, Field, Int, InputType } from "type-graphql";
 import { Ad } from "./ad";
 import { hash, verify } from "argon2";
@@ -44,6 +44,7 @@ export class User extends BaseEntity {
   @Field()
   role: UserRole;
 
+  @Field(() => [Ad])
   @OneToMany(() => Ad, (ad) => ad.owner)
   ads: Ad[];
 }
@@ -62,6 +63,18 @@ export class NewUserInput {
   @Field()
   @Length(3, 100)
   nickname: string;
+}
+
+@InputType()
+export class UpdateUserInput {
+  @Field({ nullable: true })
+  @Length(3, 100)
+  nickname: string;
+
+  @Field({ nullable: true })
+  @IsUrl()
+  @Length(3, 255)
+  avatar: string;
 }
 
 @InputType()

@@ -5,5 +5,11 @@ query Profile {
     nickname
     avatar
     role
+    ads {
+      id
+      title
+      picture
+      price
+    }
   }
 }

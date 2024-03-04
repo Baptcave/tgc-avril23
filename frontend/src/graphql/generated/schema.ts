@@ -48,6 +48,7 @@ export type Mutation = {
   login: Scalars['String'];
   logout: Scalars['Boolean'];
   signUp: User;
+  updateProfile: User;
 };
 
 
@@ -63,6 +64,11 @@ export type MutationLoginArgs = {
 
 export type MutationSignUpArgs = {
   data: NewUserInput;
+};
+
+
+export type MutationUpdateProfileArgs = {
+  data: UpdateUserInput;
 };
 
 export type NewAdInput = {
@@ -97,8 +103,14 @@ export type Tag = {
   name: Scalars['String'];
 };
 
+export type UpdateUserInput = {
+  avatar?: InputMaybe<Scalars['String']>;
+  nickname?: InputMaybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
+  ads: Array<Ad>;
   avatar: Scalars['String'];
   email: Scalars['String'];
   id: Scalars['Int'];
@@ -138,7 +150,7 @@ export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
 export type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, email: string, nickname: string, avatar: string, role: string } };
+export type ProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, email: string, nickname: string, avatar: string, role: string, ads: Array<{ __typename?: 'Ad', id: number, title: string, picture: string, price: number }> } };
 
 export type SignupMutationVariables = Exact<{
   data: NewUserInput;
@@ -146,6 +158,13 @@ export type SignupMutationVariables = Exact<{
 
 
 export type SignupMutation = { __typename?: 'Mutation', signUp: { __typename?: 'User', id: number, email: string, nickname: string, avatar: string, role: string } };
+
+export type UpdateProfileMutationVariables = Exact<{
+  data: UpdateUserInput;
+}>;
+
+
+export type UpdateProfileMutation = { __typename?: 'Mutation', updateProfile: { __typename?: 'User', id: number, email: string, nickname: string, avatar: string, role: string } };
 
 
 export const AdsDocument = gql`
@@ -322,6 +341,12 @@ export const ProfileDocument = gql`
     nickname
     avatar
     role
+    ads {
+      id
+      title
+      picture
+      price
+    }
   }
 }
     `;
@@ -389,3 +414,40 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const UpdateProfileDocument = gql`
+    mutation UpdateProfile($data: UpdateUserInput!) {
+  updateProfile(data: $data) {
+    id
+    email
+    nickname
+    avatar
+    role
+  }
+}
+    `;
+export type UpdateProfileMutationFn = Apollo.MutationFunction<UpdateProfileMutation, UpdateProfileMutationVariables>;
+
+/**
+ * __useUpdateProfileMutation__
+ *
+ * To run a mutation, you first call `useUpdateProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProfileMutation, { data, loading, error }] = useUpdateProfileMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateProfileMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProfileMutation, UpdateProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProfileMutation, UpdateProfileMutationVariables>(UpdateProfileDocument, options);
+      }
+export type UpdateProfileMutationHookResult = ReturnType<typeof useUpdateProfileMutation>;
+export type UpdateProfileMutationResult = Apollo.MutationResult<UpdateProfileMutation>;
+export type UpdateProfileMutationOptions = Apollo.BaseMutationOptions<UpdateProfileMutation, UpdateProfileMutationVariables>;
