@@ -9,11 +9,8 @@ export default function SignUp() {
     const formData = new FormData(e.target as HTMLFormElement);
     const formJSON: any = Object.fromEntries(formData.entries());
     console.log({ formJSON });
-    const res = await signupUser({ variables: { data: formJSON } });
-    console.log({ res });
-
+    await signupUser({ variables: { data: formJSON } });
     alert("merci !");
-    //router.push("/");
   };
 
   return (
