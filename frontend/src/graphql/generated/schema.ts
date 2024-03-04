@@ -40,11 +40,17 @@ export type Category = {
 export type Mutation = {
   __typename?: 'Mutation';
   createAd: Ad;
+  signUp: User;
 };
 
 
 export type MutationCreateAdArgs = {
   data: NewAdInput;
+};
+
+
+export type MutationSignUpArgs = {
+  data: NewUserInput;
 };
 
 export type NewAdInput = {
@@ -54,6 +60,12 @@ export type NewAdInput = {
   picture: Scalars['String'];
   price: Scalars['Float'];
   title: Scalars['String'];
+};
+
+export type NewUserInput = {
+  email: Scalars['String'];
+  nickname: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type ObjectId = {
@@ -97,6 +109,13 @@ export type CreateAdMutationVariables = Exact<{
 
 
 export type CreateAdMutation = { __typename?: 'Mutation', createAd: { __typename?: 'Ad', id: number } };
+
+export type SignupMutationVariables = Exact<{
+  data: NewUserInput;
+}>;
+
+
+export type SignupMutation = { __typename?: 'Mutation', signUp: { __typename?: 'User', id: number, email: string, nickname: string, avatar: string, role: string } };
 
 
 export const AdsDocument = gql`
@@ -204,3 +223,40 @@ export function useCreateAdMutation(baseOptions?: Apollo.MutationHookOptions<Cre
 export type CreateAdMutationHookResult = ReturnType<typeof useCreateAdMutation>;
 export type CreateAdMutationResult = Apollo.MutationResult<CreateAdMutation>;
 export type CreateAdMutationOptions = Apollo.BaseMutationOptions<CreateAdMutation, CreateAdMutationVariables>;
+export const SignupDocument = gql`
+    mutation Signup($data: NewUserInput!) {
+  signUp(data: $data) {
+    id
+    email
+    nickname
+    avatar
+    role
+  }
+}
+    `;
+export type SignupMutationFn = Apollo.MutationFunction<SignupMutation, SignupMutationVariables>;
+
+/**
+ * __useSignupMutation__
+ *
+ * To run a mutation, you first call `useSignupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signupMutation, { data, loading, error }] = useSignupMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<SignupMutation, SignupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, options);
+      }
+export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
+export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
+export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;

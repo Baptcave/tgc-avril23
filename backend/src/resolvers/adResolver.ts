@@ -1,7 +1,6 @@
 import { Resolver, Query, Arg, Mutation } from "type-graphql";
 import { Ad, NewAdInput } from "../entities/ad";
 import { User } from "../entities/user";
-//import { Example, NewExampleInput } from "../entities/example";
 
 @Resolver()
 class AdResolver {

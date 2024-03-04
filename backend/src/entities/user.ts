@@ -3,13 +3,12 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  UpdateDateColumn,
   OneToMany,
 } from "typeorm";
-import { Length } from "class-validator";
+import { Length, IsEmail } from "class-validator";
 import { ObjectType, Field, Int, InputType } from "type-graphql";
 import { Ad } from "./ad";
+import { argon2id, hash } from "argon2";
 
 export enum UserRole {
   ADMIN = "admin",
@@ -31,7 +30,10 @@ export class User extends BaseEntity {
   @Field()
   nickname: string;
 
-  @Column()
+  @Column({
+    default:
+      "https://icons.veryicon.com/png/o/miscellaneous/standard/avatar-15.png",
+  })
   @Field()
   avatar: string;
 
@@ -46,11 +48,22 @@ export class User extends BaseEntity {
   ads: Ad[];
 }
 
-/*
 @InputType()
-export class NewTagInput {
+export class NewUserInput {
   @Field()
-  @Length(3, 50)
-  name: string;
+  @IsEmail()
+  @Length(3, 100)
+  email: string;
+
+  @Field()
+  @Length(8, 50)
+  password: string;
+
+  @Field()
+  @Length(3, 100)
+  nickname: string;
 }
-*/
+
+export async function hashPassword(password: string) {
+  return hash(password);
+}
