@@ -10,10 +10,11 @@ import { User } from "./entities/user";
 export default buildSchema({
   resolvers: [AdResolver, CategoryResolver, UserResolver],
   authChecker: async ({ root, args, context, info }, roles = []) => {
-    const cookies = cookie.parse(context.req.headers.cookie || "");
-    const token = cookies.token;
+    const cookies = cookie.parse(context.req.headers.cookie ?? "");
 
-    console.log({ cookies }, context.req.headers);
+    const token =
+      cookies.token ??
+      context.req.headers["authorization"]?.split("Bearer ")?.[1];
 
     try {
       const decoded = jwt.verify(token, env.JWT_PRIVATE_KEY) as any;
