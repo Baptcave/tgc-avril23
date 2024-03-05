@@ -23,6 +23,12 @@ services:
       - 4001:4001
     volumes:
       - ./backend/src:/app/src
+    healthcheck:
+      test: 'curl --fail --request GET -H ''content-type:application/json'' --url ''http://localhost:4001/graphql?query=%7B__typename%7D'''
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    
 
   frontend:
     build: frontend
@@ -30,3 +36,26 @@ services:
       - 3000:3000
     volumes:
       - ./frontend/src:/app/src
+    healthcheck:
+      test: "curl --fail --request GET --url http://localhost:3000"
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  testrunner:
+    build: 
+      dockerfile: e2e-tests/Dockerfile
+      context: ./
+    environment:
+      DB_HOST: testDB
+      BASE_URL: http://localhost:3000
+    volumes:
+      - ./backend/src/:/backend/src/
+      - ./e2e-tests/playwright-report:/e2e-tests/playwright-report
+      - ./e2e-tests/test-results:/e2e-tests/test-results
+      - ./e2e-tests/src:/e2e-tests/src
+    depends_on:
+      frontend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
