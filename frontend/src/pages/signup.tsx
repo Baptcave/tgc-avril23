@@ -34,6 +34,7 @@ export default function SignUp() {
               <span className="label-text">Email</span>
             </label>
             <input
+              data-testid="signup-email"
               required
               type="text"
               minLength={3}
@@ -50,6 +51,7 @@ export default function SignUp() {
                 <span className="label-text">Nom d'utilisateur</span>
               </label>
               <input
+                data-testid="signup-nickname"
                 required
                 type="text"
                 minLength={3}
@@ -66,6 +68,7 @@ export default function SignUp() {
                   <span className="label-text">Mot de passe</span>
                 </label>
                 <input
+                  data-testid="signup-password"
                   required
                   type="password"
                   minLength={8}
@@ -77,7 +80,7 @@ export default function SignUp() {
               </div>
 
               <button className="btn btn-primary text-white mt-12 w-full">
-                Envoyer
+                Creer mon compte
               </button>
             </div>
           </div>
