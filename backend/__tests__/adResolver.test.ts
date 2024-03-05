@@ -4,6 +4,7 @@ import { Ad } from '../src/entities/ad';
 import { Category } from '../src/entities/category';
 import { Tag } from '../src/entities/tag';
 import { User, UserRole } from '../src/entities/user';
+import getAdminContext from './helpers/getAdminContext';
 
 describe('Ad Resolver', () => {
   it('can return a list of ads', async () => {
@@ -95,13 +96,6 @@ describe('Ad Resolver', () => {
   });
 
   it('can create an ad', async () => {
-    await User.create({
-      email: 'test@test.com',
-      avatar: 'yzeduzeygef',
-      nickname: 'ekruhfiuerhf',
-      role: UserRole.VISITOR,
-      hashedPassword: 'eofiheiorhg',
-    }).save();
     const cat = await Category.create({ name: 'mycat' }).save();
     const res = await execute(
       gql`
@@ -135,7 +129,8 @@ describe('Ad Resolver', () => {
             id: cat.id,
           },
         },
-      }
+      },
+      await getAdminContext()
     );
 
     expect(res).toMatchInlineSnapshot(`
@@ -150,7 +145,7 @@ describe('Ad Resolver', () => {
       "id": 1,
       "location": "Lyon",
       "owner": {
-        "email": "test@test.com",
+        "email": "admin@app.com",
         "id": 1,
       },
       "picture": "http://img.com/i.png",
