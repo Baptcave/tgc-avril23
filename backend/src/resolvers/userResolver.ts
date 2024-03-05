@@ -1,14 +1,17 @@
-import { Resolver, Query, Arg, Mutation, Ctx } from "type-graphql";
+import { Resolver, Query, Arg, Mutation, Ctx, Authorized } from "type-graphql";
 import {
   NewUserInput,
   User,
   hashPassword,
   LoginUserInput,
   verifyPassword,
+  UserRole,
+  UpdateUserInput,
 } from "../entities/user";
 import jwt from "jsonwebtoken";
 import env from "../env";
 import { ContextType } from "../types";
+import { UnauthenticatedError } from "../utils";
 
 @Resolver()
 class UserResolver {
@@ -55,6 +58,38 @@ class UserResolver {
     });
 
     return token;
+  }
+
+  @Authorized()
+  @Query(() => User)
+  async profile(@Ctx() ctx: ContextType) {
+    return User.findOneOrFail({
+      where: { id: ctx?.currentUser?.id },
+      relations: { ads: true },
+    });
+  }
+
+  @Mutation(() => Boolean)
+  async logout(@Ctx() ctx: ContextType) {
+    ctx.res.clearCookie("token");
+    return true;
+  }
+
+  @Authorized()
+  @Mutation(() => User)
+  async updateProfile(
+    @Ctx() ctx: ContextType,
+    @Arg("data", { validate: true }) data: UpdateUserInput
+  ) {
+    if (!ctx.currentUser) throw UnauthenticatedError();
+    Object.assign(
+      ctx.currentUser,
+      Object.keys(data).reduce((acc: any, prop: any) => {
+        if (!!(data as any)[prop]) acc[prop] = (data as any)[prop];
+        return acc;
+      }, {})
+    );
+    return ctx.currentUser.save();
   }
 }
 

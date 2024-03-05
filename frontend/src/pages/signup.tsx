@@ -1,16 +1,27 @@
 import React, { FormEvent } from "react";
 import Layout from "@/components/Layout";
-import { useSignupMutation } from "@/graphql/generated/schema";
+import {
+  useLoginMutation,
+  useSignupMutation,
+} from "@/graphql/generated/schema";
+import { useRouter } from "next/router";
 
 export default function SignUp() {
+  const router = useRouter();
+  const [loginUser] = useLoginMutation();
+
   const [signupUser] = useSignupMutation();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const formJSON: any = Object.fromEntries(formData.entries());
-    console.log({ formJSON });
     await signupUser({ variables: { data: formJSON } });
-    alert("merci !");
+    await loginUser({
+      variables: {
+        data: { email: formJSON.email, password: formJSON.password },
+      },
+    });
+    router.push("/login");
   };
 
   return (

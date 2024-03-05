@@ -2,7 +2,7 @@ import db, { clearDB } from "./db";
 import { Category } from "./entities/category";
 import { Tag } from "./entities/tag";
 import { Ad } from "./entities/ad";
-import { User, UserRole } from "./entities/user";
+import { User, UserRole, hashPassword } from "./entities/user";
 
 export default async function main() {
   await db.initialize();
@@ -20,7 +20,7 @@ export default async function main() {
   const user1 = await User.create({
     email: "user@test.com",
     nickname: "user1",
-    hashedPassword: "password",
+    hashedPassword: await hashPassword("password"),
     avatar:
       "https://www.shutterstock.com/image-vector/user-icon-trendy-flat-style-260nw-418179865.jpg",
   }).save();
@@ -28,7 +28,7 @@ export default async function main() {
   const admin1 = await User.create({
     email: "admin@test.com",
     nickname: "admin1",
-    hashedPassword: "password",
+    hashedPassword: await hashPassword("password"),
     avatar:
       "https://www.shutterstock.com/image-vector/user-icon-vector-600nw-393536320.jpg",
     role: UserRole.ADMIN,
