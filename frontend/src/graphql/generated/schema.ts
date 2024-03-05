@@ -45,6 +45,7 @@ export type LoginUserInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createAd: Ad;
+  deleteAd: Scalars['String'];
   login: Scalars['String'];
   logout: Scalars['Boolean'];
   signUp: User;
@@ -54,6 +55,11 @@ export type Mutation = {
 
 export type MutationCreateAdArgs = {
   data: NewAdInput;
+};
+
+
+export type MutationDeleteAdArgs = {
+  adId: Scalars['Float'];
 };
 
 
@@ -92,9 +98,15 @@ export type ObjectId = {
 
 export type Query = {
   __typename?: 'Query';
+  ad: Ad;
   ads: Array<Ad>;
   categories: Array<Category>;
   profile: User;
+};
+
+
+export type QueryAdArgs = {
+  adId: Scalars['Float'];
 };
 
 export type Tag = {
@@ -118,6 +130,13 @@ export type User = {
   role: Scalars['String'];
 };
 
+export type AdQueryVariables = Exact<{
+  adId: Scalars['Float'];
+}>;
+
+
+export type AdQuery = { __typename?: 'Query', ad: { __typename?: 'Ad', id: number, title: string, description: string, price: number, createdAt: any, location: string, picture: string, updatedAt: any, owner: { __typename?: 'User', id: number, email: string, nickname: string, avatar: string, role: string }, category: { __typename?: 'Category', id: number, name: string }, tags: Array<{ __typename?: 'Tag', id: number, name: string }> } };
+
 export type AdsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -134,6 +153,13 @@ export type CreateAdMutationVariables = Exact<{
 
 
 export type CreateAdMutation = { __typename?: 'Mutation', createAd: { __typename?: 'Ad', id: number } };
+
+export type DeleteAdMutationVariables = Exact<{
+  adId: Scalars['Float'];
+}>;
+
+
+export type DeleteAdMutation = { __typename?: 'Mutation', deleteAd: string };
 
 export type LoginMutationVariables = Exact<{
   data: LoginUserInput;
@@ -167,6 +193,63 @@ export type UpdateProfileMutationVariables = Exact<{
 export type UpdateProfileMutation = { __typename?: 'Mutation', updateProfile: { __typename?: 'User', id: number, email: string, nickname: string, avatar: string, role: string } };
 
 
+export const AdDocument = gql`
+    query Ad($adId: Float!) {
+  ad(adId: $adId) {
+    id
+    title
+    description
+    price
+    owner {
+      id
+      email
+      nickname
+      avatar
+      role
+    }
+    category {
+      id
+      name
+    }
+    createdAt
+    location
+    picture
+    tags {
+      id
+      name
+    }
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useAdQuery__
+ *
+ * To run a query within a React component, call `useAdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAdQuery({
+ *   variables: {
+ *      adId: // value for 'adId'
+ *   },
+ * });
+ */
+export function useAdQuery(baseOptions: Apollo.QueryHookOptions<AdQuery, AdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AdQuery, AdQueryVariables>(AdDocument, options);
+      }
+export function useAdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AdQuery, AdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AdQuery, AdQueryVariables>(AdDocument, options);
+        }
+export type AdQueryHookResult = ReturnType<typeof useAdQuery>;
+export type AdLazyQueryHookResult = ReturnType<typeof useAdLazyQuery>;
+export type AdQueryResult = Apollo.QueryResult<AdQuery, AdQueryVariables>;
 export const AdsDocument = gql`
     query Ads {
   ads {
@@ -272,6 +355,37 @@ export function useCreateAdMutation(baseOptions?: Apollo.MutationHookOptions<Cre
 export type CreateAdMutationHookResult = ReturnType<typeof useCreateAdMutation>;
 export type CreateAdMutationResult = Apollo.MutationResult<CreateAdMutation>;
 export type CreateAdMutationOptions = Apollo.BaseMutationOptions<CreateAdMutation, CreateAdMutationVariables>;
+export const DeleteAdDocument = gql`
+    mutation DeleteAd($adId: Float!) {
+  deleteAd(adId: $adId)
+}
+    `;
+export type DeleteAdMutationFn = Apollo.MutationFunction<DeleteAdMutation, DeleteAdMutationVariables>;
+
+/**
+ * __useDeleteAdMutation__
+ *
+ * To run a mutation, you first call `useDeleteAdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAdMutation, { data, loading, error }] = useDeleteAdMutation({
+ *   variables: {
+ *      adId: // value for 'adId'
+ *   },
+ * });
+ */
+export function useDeleteAdMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAdMutation, DeleteAdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteAdMutation, DeleteAdMutationVariables>(DeleteAdDocument, options);
+      }
+export type DeleteAdMutationHookResult = ReturnType<typeof useDeleteAdMutation>;
+export type DeleteAdMutationResult = Apollo.MutationResult<DeleteAdMutation>;
+export type DeleteAdMutationOptions = Apollo.BaseMutationOptions<DeleteAdMutation, DeleteAdMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($data: LoginUserInput!) {
   login(data: $data)
