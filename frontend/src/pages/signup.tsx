@@ -1,10 +1,10 @@
-import React, { FormEvent } from "react";
-import Layout from "@/components/Layout";
+import React, { FormEvent } from 'react';
+import Layout from '@/components/Layout';
 import {
   useLoginMutation,
   useSignupMutation,
-} from "@/graphql/generated/schema";
-import { useRouter } from "next/router";
+} from '@/graphql/generated/schema';
+import { useRouter } from 'next/router';
 
 export default function SignUp() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function SignUp() {
         data: { email: formJSON.email, password: formJSON.password },
       },
     });
-    router.push("/login");
+    router.push('/login');
   };
 
   return (

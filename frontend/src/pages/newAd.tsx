@@ -1,10 +1,10 @@
-import Layout from "@/components/Layout";
-import { FormEvent } from "react";
-import { useRouter } from "next/router";
+import Layout from '@/components/Layout';
+import { FormEvent } from 'react';
+import { useRouter } from 'next/router';
 import {
   useCategoriesQuery,
   useCreateAdMutation,
-} from "@/graphql/generated/schema";
+} from '@/graphql/generated/schema';
 
 export default function NewAd() {
   const router = useRouter();
@@ -17,8 +17,8 @@ export default function NewAd() {
     formJSON.category = { id: parseInt(formJSON.category, 10) };
     formJSON.price = parseFloat(formJSON.price);
     await createAd({ variables: { data: formJSON } });
-    alert("merci !");
-    router.push("/");
+    alert('merci !');
+    router.push('/');
   };
 
   const { data } = useCategoriesQuery();

@@ -1,7 +1,7 @@
-import Head from "next/head";
-import Header from "./Header";
-import { ReactNode } from "react";
-import { Toaster } from "react-hot-toast";
+import Head from 'next/head';
+import Header from './Header';
+import { ReactNode } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 interface LayoutProps {
   children: ReactNode;

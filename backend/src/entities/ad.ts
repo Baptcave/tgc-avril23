@@ -8,13 +8,13 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
-} from "typeorm";
-import { User } from "./user";
-import { Tag } from "./tag";
-import { Length } from "class-validator";
-import { ObjectType, Field, Int, InputType } from "type-graphql";
-import { Category } from "./category";
-import { ObjectId } from "../utils";
+} from 'typeorm';
+import { User } from './user';
+import { Tag } from './tag';
+import { Length } from 'class-validator';
+import { ObjectType, Field, Int, InputType } from 'type-graphql';
+import { Category } from './category';
+import { ObjectId } from '../utils';
 
 @Entity()
 @ObjectType()
@@ -27,7 +27,7 @@ export class Ad extends BaseEntity {
   @Field()
   title: string;
 
-  @Column({ type: "text" })
+  @Column({ type: 'text' })
   @Field()
   description: string;
 
@@ -47,7 +47,7 @@ export class Ad extends BaseEntity {
   @Field()
   picture: string;
 
-  @Column({ type: "float" })
+  @Column({ type: 'float' })
   @Field()
   price: number;
 

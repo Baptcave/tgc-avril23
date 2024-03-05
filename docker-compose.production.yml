@@ -4,7 +4,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -d postgres -U postgres']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -12,7 +12,7 @@ services:
   backend:
     environment:
       - DB_HOST=db
-    build: 
+    build:
       context: backend
       dockerfile: Dockerfile.production
     depends_on:
@@ -22,9 +22,8 @@ services:
       - 4000:4000
 
   frontend:
-    build: 
+    build:
       context: frontend
       dockerfile: Dockerfile.production
-    ports: 
+    ports:
       - 3000:3000
-    

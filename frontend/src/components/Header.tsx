@@ -1,6 +1,6 @@
-import { useCategoriesQuery } from "@/graphql/generated/schema";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { useCategoriesQuery } from '@/graphql/generated/schema';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Header() {
   const router = useRouter();
@@ -46,14 +46,14 @@ export default function Header() {
       </div>
       <nav className="flex pl-2 h-[54px]">
         {categories.map((cat) => {
-          const [firstLetter, ...resetOfCatName] = cat.name.split("");
-          const catName = firstLetter.toUpperCase() + resetOfCatName.join("");
+          const [firstLetter, ...resetOfCatName] = cat.name.split('');
+          const catName = firstLetter.toUpperCase() + resetOfCatName.join('');
           const isActive = router.query.categoryId === cat.id.toString();
 
           return (
             <div
               className={`p-2 rounded-lg mt-3 cursor-pointer ${
-                isActive ? "bg-[#ffa41b] text-white" : ""
+                isActive ? 'bg-[#ffa41b] text-white' : ''
               }`}
               onClick={() => {}}
               key={catName}

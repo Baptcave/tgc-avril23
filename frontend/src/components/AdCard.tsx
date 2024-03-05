@@ -1,5 +1,5 @@
-import { Ad } from "@/graphql/generated/schema";
-import Link from "next/link";
+import { Ad } from '@/graphql/generated/schema';
+import Link from 'next/link';
 
 type AdCardProps = {
   ad: { price: number; title: string; picture: string };

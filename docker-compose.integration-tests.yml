@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -d postgres -U postgres']
       interval: 5s
       timeout: 5s
       retries: 10
@@ -14,7 +14,7 @@ services:
       - 5432:5432
 
   testrunner:
-    build: 
+    build:
       dockerfile: Dockerfile.integration-tests
       context: ./backend
     depends_on:

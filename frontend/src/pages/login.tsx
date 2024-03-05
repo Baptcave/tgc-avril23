@@ -1,12 +1,12 @@
-import React, { FormEvent } from "react";
-import Layout from "@/components/Layout";
-import { useLoginMutation } from "@/graphql/generated/schema";
-import { useProfileQuery } from "@/graphql/generated/schema";
-import { useLogoutMutation } from "@/graphql/generated/schema";
+import React, { FormEvent } from 'react';
+import Layout from '@/components/Layout';
+import { useLoginMutation } from '@/graphql/generated/schema';
+import { useProfileQuery } from '@/graphql/generated/schema';
+import { useLogoutMutation } from '@/graphql/generated/schema';
 
 export default function Login() {
   const [loginUser] = useLoginMutation();
-  const { data, client } = useProfileQuery({ errorPolicy: "ignore" });
+  const { data, client } = useProfileQuery({ errorPolicy: 'ignore' });
   const [logoutUser] = useLogoutMutation();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -23,7 +23,7 @@ export default function Login() {
   };
 
   return (
-    <Layout title={data?.profile ? "Se déconnecter" : "Se connecter"}>
+    <Layout title={data?.profile ? 'Se déconnecter' : 'Se connecter'}>
       {data?.profile ? (
         <div className="pt-4">
           <p>Connecté en tant que {data.profile.email}</p>

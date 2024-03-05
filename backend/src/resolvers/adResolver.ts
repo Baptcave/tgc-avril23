@@ -1,91 +1,70 @@
-import { Resolver, Query, Arg, Mutation, Authorized, Ctx } from "type-graphql";
-import { Ad, NewAdInput } from "../entities/ad";
-import { User } from "../entities/user";
-import { ContextType } from "../types";
-import { UnauthenticatedError, NotFoundError } from "../utils";
+import { Resolver, Query, Arg, Mutation, Authorized, Ctx } from 'type-graphql';
+import { Ad, NewAdInput } from '../entities/ad';
+import { User } from '../entities/user';
+import { ContextType } from '../types';
+import { UnauthenticatedError, NotFoundError } from '../utils';
 
 @Resolver()
 class AdResolver {
-	@Query(() => [Ad])
-	async ads() {
-		return Ad.find({ relations: { category: true, owner: true, tags: true } });
-	}
+  @Query(() => [Ad])
+  async ads() {
+    return Ad.find({ relations: { category: true, owner: true, tags: true } });
+  }
 
-	@Query(() => Ad)
-	async ad(@Arg("adId") adId: number) {
-		return Ad.findOne({
-			relations: { category: true, owner: true, tags: true },
-			where: { id: adId },
-		});
-	}
+  @Query(() => Ad)
+  async ad(@Arg('adId') adId: number) {
+    return Ad.findOne({
+      relations: { category: true, owner: true, tags: true },
+      where: { id: adId },
+    });
+  }
 
-	@Authorized()
-	@Mutation(() => Ad)
-	async createAd(
-		@Arg("data", { validate: true }) data: NewAdInput,
-		@Ctx() ctx: ContextType
-	) {
-		if (typeof ctx.currentUser === "undefined") throw UnauthenticatedError();
+  @Authorized()
+  @Mutation(() => Ad)
+  async createAd(
+    @Arg('data', { validate: true }) data: NewAdInput,
+    @Ctx() ctx: ContextType
+  ) {
+    if (typeof ctx.currentUser === 'undefined') throw UnauthenticatedError();
 
-		const owner = await User.findOneOrFail({
-			where: { id: ctx?.currentUser?.id },
-		});
+    const owner = await User.findOneOrFail({
+      where: { id: ctx?.currentUser?.id },
+    });
 
-		const newAd = await Ad.create({ ...data, owner }).save();
+    const newAd = await Ad.create({ ...data, owner }).save();
 
-		return Ad.findOne({
-			relations: { category: true, owner: true, tags: true },
-			where: { id: newAd.id },
-		});
-	}
+    return Ad.findOne({
+      relations: { category: true, owner: true, tags: true },
+      where: { id: newAd.id },
+    });
+  }
 
-	//   {
-	//   "data": {
-	//     "createAd": {
-	//       "id": 7,
-	//       "title": "mon annonce",
-	//       "description": "test description",
-	//       "owner": {
-	//         "id": 1,
-	//         "email": "user@test.com"
-	//       },
-	//       "price": 22,
-	//       "location": "Nice",
-	//       "picture": "https://placehold.co/600x400/",
-	//       "category": {
-	//         "id": 1,
-	//         "name": "informatique"
-	//       }
-	//     }
-	//   }
-	// }
+  @Authorized()
+  @Mutation(() => String)
+  async deleteAd(
+    @Arg('adId') adId: number,
+    @Ctx() ctx: ContextType
+  ): Promise<string> {
+    if (typeof ctx.currentUser === 'undefined') throw UnauthenticatedError();
 
-	@Authorized()
-	@Mutation(() => String)
-	async deleteAd(
-		@Arg("adId") adId: number,
-		@Ctx() ctx: ContextType
-	): Promise<string> {
-		if (typeof ctx.currentUser === "undefined") throw UnauthenticatedError();
+    const adToDelete = await Ad.findOne({
+      where: { id: adId },
+      relations: { owner: true },
+    });
 
-		const adToDelete = await Ad.findOne({
-			where: { id: adId },
-			relations: { owner: true },
-		});
+    if (!adToDelete) throw NotFoundError();
 
-		if (!adToDelete) throw NotFoundError();
+    if (
+      ctx.currentUser.role !== 'admin' &&
+      adToDelete?.owner.id !== ctx.currentUser.id
+    ) {
+      throw new Error('You are not allowed to delete this ad');
+    }
 
-		if (
-			ctx.currentUser.role !== "admin" &&
-			adToDelete?.owner.id !== ctx.currentUser.id
-		) {
-			throw new Error("You are not allowed to delete this ad");
-		}
+    await adToDelete.remove();
 
-		await adToDelete.remove();
-
-		return "Ad deleted successfully!";
-	}
+    return 'Ad deleted successfully!';
+  }
 }
 
 export default AdResolver;

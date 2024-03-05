@@ -4,7 +4,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -d postgres -U postgres']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -25,9 +25,7 @@ services:
 
   frontend:
     build: frontend
-    ports: 
+    ports:
       - 3000:3000
     volumes:
       - ./frontend/src:/app/src
-        
-    

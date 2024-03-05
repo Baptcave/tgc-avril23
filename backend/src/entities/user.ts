@@ -4,15 +4,15 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-} from "typeorm";
-import { Length, IsEmail, IsUrl } from "class-validator";
-import { ObjectType, Field, Int, InputType } from "type-graphql";
-import { Ad } from "./ad";
-import { hash, verify } from "argon2";
+} from 'typeorm';
+import { Length, IsEmail, IsUrl } from 'class-validator';
+import { ObjectType, Field, Int, InputType } from 'type-graphql';
+import { Ad } from './ad';
+import { hash, verify } from 'argon2';
 
 export enum UserRole {
-  ADMIN = "admin",
-  VISITOR = "visitor",
+  ADMIN = 'admin',
+  VISITOR = 'visitor',
 }
 
 @Entity()
@@ -32,7 +32,7 @@ export class User extends BaseEntity {
 
   @Column({
     default:
-      "https://icons.veryicon.com/png/o/miscellaneous/standard/avatar-15.png",
+      'https://icons.veryicon.com/png/o/miscellaneous/standard/avatar-15.png',
   })
   @Field()
   avatar: string;
@@ -40,7 +40,7 @@ export class User extends BaseEntity {
   @Column()
   hashedPassword: string;
 
-  @Column({ type: "enum", enum: UserRole, default: UserRole.VISITOR })
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.VISITOR })
   @Field()
   role: UserRole;
 

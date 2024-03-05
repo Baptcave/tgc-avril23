@@ -1,5 +1,5 @@
-import express from "express";
-import { User } from "./entities/user";
+import express from 'express';
+import { User } from './entities/user';
 
 export interface ContextType {
   req: express.Request;

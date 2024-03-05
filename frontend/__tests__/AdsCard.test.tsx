@@ -1,13 +1,13 @@
-import AdCard from "@/components/AdCard";
-import { render } from "@testing-library/react";
+import AdCard from '@/components/AdCard';
+import { render } from '@testing-library/react';
 
-describe("AdCard", () => {
-  it("renders correctly", () => {
+describe('AdCard', () => {
+  it('renders correctly', () => {
     const res = render(
       <AdCard
         ad={{
-          title: "mon annonce",
-          picture: "http://img.com/i.png",
+          title: 'mon annonce',
+          picture: 'http://img.com/i.png',
           price: 42,
         }}
         link="/ads/1"

@@ -4,10 +4,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-} from "typeorm";
-import { Length } from "class-validator";
-import { ObjectType, Field, Int, InputType } from "type-graphql";
-import { Ad } from "./ad";
+} from 'typeorm';
+import { Length } from 'class-validator';
+import { ObjectType, Field, Int, InputType } from 'type-graphql';
+import { Ad } from './ad';
 
 @Entity()
 @ObjectType()
