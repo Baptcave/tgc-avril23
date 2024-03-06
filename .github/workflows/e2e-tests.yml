@@ -12,8 +12,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: Install dependencies
-        run: cd e2e-tests && npm ci && cd ../backend && npm ci
+      - name: Install e2e dependencies
+        run: npm ci
+      - name: Install backend dependencies
+        run: cd backend && npm ci
       - name: Install Playwright Browsers
         run: cd e2e-tests && npx playwright install --with-deps
       - name: Make envfiles
