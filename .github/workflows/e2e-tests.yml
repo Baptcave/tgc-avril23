@@ -13,11 +13,11 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: cd e2e-tests && npm ci
+        run: cd e2e-tests && npm ci && cd ../backend && npm ci
       - name: Install Playwright Browsers
         run: cd e2e-tests && npx playwright install --with-deps
       - name: Start app
-        run: cd e2e-tests && npx playwright test
+        run: cd e2e-tests && npm run app:start
       - name: Run Playwright tests
         run: cd e2e-tests && npm run test
       - uses: actions/upload-artifact@v4
