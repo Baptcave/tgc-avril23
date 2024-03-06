@@ -26,9 +26,9 @@ services:
       - ../backend/src:/app/src
     healthcheck:
       test: 'curl --fail --request GET -H ''content-type:application/json'' --url ''http://localhost:4001/graphql?query=%7B__typename%7D'''
-      interval: 1s
+      interval: 3s
       timeout: 5s
-      retries: 60
+      retries: 30
 
   frontend:
     build: ../frontend
