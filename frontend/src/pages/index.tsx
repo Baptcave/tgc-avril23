@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
     <Layout title="Accueil - TGC">
-      <h1 className="pt-4 pb-4 text-lg">Annonces</h1>
+      <h1 className="pt-4 pb-4 text-lg">Annonces Récentes</h1>
       <div className="flex flex-wrap">
         {typeof data === 'undefined' ? (
           'chargement'
