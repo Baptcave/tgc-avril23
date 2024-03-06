@@ -20,6 +20,8 @@ jobs:
         run: cd e2e-tests && npm run app:start
       - name: Run Playwright tests
         run: cd e2e-tests && npm run test
+      - name: Make envfile
+        run: cd ./backend/ .env.example .env && cd ./e2e-tests/ .env.example .env
       - uses: actions/upload-artifact@v4
         if: always()
         with:
