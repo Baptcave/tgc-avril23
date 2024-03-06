@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/playwright:v1.30.0-focal
 RUN mkdir /backend
 WORKDIR /backend
 
-COPY package*.json ./
+COPY ./backend/package*.json ./
 
 RUN npm i
 
