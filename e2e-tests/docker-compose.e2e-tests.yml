@@ -27,7 +27,7 @@ services:
     healthcheck:
       test: 'curl --fail --request GET -H ''content-type:application/json'' --url ''http://localhost:4001/graphql?query=%7B__typename%7D'''
       interval: 1s
-      timeout: 2s
+      timeout: 5s
       retries: 60
 
   frontend:
