@@ -17,7 +17,7 @@ jobs:
       - name: Install Playwright Browsers
         run: cd e2e-tests && npx playwright install --with-deps
       - name: Make envfiles
-        run: cd ./backend/ .env.example .env && cd ./e2e-tests/ .env.example .env
+        run: cd ./backend/ && cp .env.example .env && cd ./e2e-tests/ && cp .env.example .env
       - name: Start app
         run: cd e2e-tests && npm run app:start
       - name: Run Playwright tests
