@@ -4,17 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test -c dist/e2e-tests --trace on",
+    "test": "playwright test -c dist/e2e-tests --trace on",
     "test:gui": "npm run pretest && npx playwright test -c dist/e2e-tests --trace on --headed",
     "test:watch": "npm run test && chokidar 'src/**/*.spec.ts' -c 'npm run test'",
     "test:watch:gui": "npm run test:gui && chokidar 'src/**/*.spec.ts' -c 'npm run test:gui'",
-    "pretest": "tsc --incremental -p tsconfig.json"
+    "pretest": "tsc --incremental -p tsconfig.json",
+    "app:start": "docker compose -f docker-compose.e2e-tests.yml up --wait",
+    "app:stop": "docker compose -f docker-compose.e2e-tests.yml down"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.29.0",
+    "@playwright/test": "^1.42.1",
     "@types/cookie": "^0.6.0",
     "@types/cors": "^2.8.14",
     "@types/express": "^4.17.17",

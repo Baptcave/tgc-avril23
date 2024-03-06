@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.30.0-focal
+FROM mcr.microsoft.com/playwright:v1.42.1-focal
 
 RUN mkdir /backend
 WORKDIR /backend
