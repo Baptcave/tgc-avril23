@@ -146,7 +146,7 @@ domain.duckdns.org {
 
 # backend
 api.domain.duckdns.org {
-    reverse_proxy localhost:4000
+    reverse_proxy localhost:4001
 }
 ```
 

@@ -21,7 +21,7 @@ jobs:
       - name: Install backend dependencies
         run: cd ../backend && npm ci
       - name: Install Playwright Browsers
-        run: npx playwright install webkit
+        run: npx playwright install webkit --with-deps
       - name: Make envfiles
         run: |
           cp .env.example .env
