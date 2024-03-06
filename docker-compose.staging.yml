@@ -1,0 +1,25 @@
+services:
+  db-staging:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -d postgres -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    environment:
+      - DB_HOST=db-staging
+    image: scrip/tgc-avril23-staging-back
+    depends_on:
+      db-staging:
+        condition: service_healthy
+    ports:
+      - 5001:5001
+
+  frontend:
+    image: scrip/tgc-avril23-staging-front
+    ports:
+      - 3001:3000
