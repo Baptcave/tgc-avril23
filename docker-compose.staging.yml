@@ -1,3 +1,5 @@
+
+
 services:
   db-staging:
     image: postgres:15-alpine
@@ -11,7 +13,7 @@ services:
     volumes:
       - stagingDB:/var/lib/postgresql/data
 
-  backend:
+  backend-staging:
     environment:
       - NODE_ENV=${NODE_ENV:-production}
       - DB_HOST=${DB_HOST:-db-staging}
@@ -29,12 +31,12 @@ services:
     ports:
       - 5001:5001      
 
-  frontend:
+  frontend-staging:
     image: scrip/tgc-avril23-staging-front
     ports:
       - 3001:3000
 
-  fileuploadservice:
+  fileuploadservice-staging:
     image: scrip/image-upload-service
     environment:
       - PORT=8000
