@@ -35,7 +35,7 @@ services:
       - 3000:3000
 
   fileuploadservice:
-    build : scrip/image-upload-service
+    image : scrip/image-upload-service
     environment:
       - PORT=8000
     ports:
