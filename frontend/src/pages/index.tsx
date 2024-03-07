@@ -11,7 +11,7 @@ export default function Home() {
       {typeof data === 'undefined' ? (
         'chargement'
       ) : (
-        <div data-testid="ads-list flex flex-wrap">
+        <div data-testid="ads-list" className="flex flex-wrap">
           {data.ads.map((a) => {
             return <AdCard key={a.id} ad={a} link={`/${a.id}`} />;
           })}
