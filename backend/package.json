@@ -8,7 +8,12 @@
     "build": "tsc",
     "start": "node build/index.js",
     "resetDB": "ts-node-dev src/resetDb.ts",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "test:watch": "jest --runInBand --watch",
+    "testDB": "docker compose -f docker-compose.integration-tests.yml up testDB",
+    "testDB:wait": "docker compose -f docker-compose.integration-tests.yml up testDB --wait",
+    "testDB:stop": "docker compose -f docker-compose.integration-tests.yml down",
+    "integration-tests": "docker compose -f docker-compose.integration-tests.yml up  --exit-code-from testrunner"
   },
   "repository": {
     "type": "git",
