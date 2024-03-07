@@ -31,6 +31,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Call VPS webhook to update staging
-        uses: wei/curl@master
+        uses: wei/curl@v1
         with:
           args: https://ops.the-good-corner.duckdns.org/hooks/update-staging

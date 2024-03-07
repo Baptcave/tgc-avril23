@@ -46,6 +46,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Call VPS webhook to update production
-        uses: wei/curl@master
+        uses: wei/curl@v1
         with:
           args: https://ops.the-good-corner.duckdns.org/hooks/update-production
