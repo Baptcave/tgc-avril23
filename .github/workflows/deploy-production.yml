@@ -30,7 +30,7 @@ jobs:
     needs:
       - client-tests
       - e2e-tests
-    uses: ComicScrip/wns-livecodings-nov22/.github/workflows/build-front.yml@main
+    uses: ComicScrip/tgc-avril23/.github/workflows/build-front.yml@main
     secrets:
       DOCKERHUB_USERNAME: scrip
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
