@@ -7,46 +7,22 @@ on:
 
 jobs:
   build-and-push-server-staging:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          push: true
-          context: '{{defaultContext}}:backend'
-          file: 'Dockerfile.production'
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tgc-avril23-staging-back
+    uses: ComicScrip/tgc-avril23/.github/workflows/build-backend.yml@staging
+    secrets:
+      DOCKERHUB_USERNAME: scrip
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    with:
+      image_name: scrip/tgc-avril23-staging-back
+
   build-and-push-client-staging:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          push: true
-          context: '{{defaultContext}}:frontend'
-          file: 'Dockerfile.production'
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tgc-avril23-staging-front
-          build-args: |
-            NEXT_PUBLIC_GRAPHQL_API_URL=https://api.staging.the-good-corner.duckdns.org
-            NEXT_PUBLIC_UPLOAD_API_ENDPOINT=https://files.staging.the-good-corner.duckdns.org/uploads
+    uses: ComicScrip/tgc-avril23/.github/workflows/build-frontend.yml@staging
+    secrets:
+      DOCKERHUB_USERNAME: scrip
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    with:
+      image_name: scrip/tgc-avril23-staging-front
+      fileupload_api_url: https://files.staging.the-good-corner.duckdns.org
+      graphql_api_url: https://api.staging.the-good-corner.duckdns.org
 
   notify:
     needs:

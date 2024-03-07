@@ -13,7 +13,7 @@ services:
 
   backend:
     environment:
-      - DB_HOST=db
+      - DB_HOST=prodDB
     build: backend
     depends_on:
       db:
@@ -29,3 +29,16 @@ services:
       - 3000:3000
     volumes:
       - ./frontend/src:/app/src
+
+  fileuploadservice:
+      build : scrip/image-upload-service
+      environment:
+        - PORT: 8000
+      ports:
+        - 8000:8000
+      volumes:
+        - ./file-upload-service/files:/app/files
+
+volumes:
+  prodDB:
+  uploadedFilesStaging:
