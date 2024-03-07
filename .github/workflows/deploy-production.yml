@@ -37,7 +37,7 @@ jobs:
     with:
       image_name: scrip/tgc-avril23-front
       fileupload_api_url: https://files.the-good-corner.duckdns.org
-      graphql_api_url: https://api.staging.the-good-corner.duckdns.org
+      graphql_api_url: https://api.the-good-corner.duckdns.org
 
   notify-vps:
     needs:
