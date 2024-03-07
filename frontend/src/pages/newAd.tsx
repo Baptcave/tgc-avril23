@@ -1,12 +1,17 @@
 import Layout from '@/components/Layout';
-import { FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 import {
   useCategoriesQuery,
   useCreateAdMutation,
 } from '@/graphql/generated/schema';
+import axios from 'axios';
+import { useTagsQuery } from '@/graphql/generated/schema';
+import Select from 'react-select';
 
 export default function NewAd() {
+  const [imagePreviewUrl, setImagePreviewUrl] = useState('');
+  const [tags, setTags] = useState([] as any[]);
   const router = useRouter();
   const [createAd] = useCreateAdMutation();
 
@@ -16,6 +21,10 @@ export default function NewAd() {
     const formJSON: any = Object.fromEntries(formData.entries());
     formJSON.category = { id: parseInt(formJSON.category, 10) };
     formJSON.price = parseFloat(formJSON.price);
+    formJSON.picture = imagePreviewUrl;
+    formJSON.tags = formJSON.tags.map((tag: string) => ({
+      id: parseInt(tag, 10),
+    }));
     await createAd({ variables: { data: formJSON } });
     alert('merci !');
     router.push('/');
@@ -24,6 +33,14 @@ export default function NewAd() {
   const { data } = useCategoriesQuery();
 
   const categories = data?.categories || [];
+
+  const { data: tagsData } = useTagsQuery();
+
+  const options =
+    tagsData?.tags.map((tag) => ({
+      label: tag.name,
+      value: tag.id.toString(),
+    })) || [];
 
   return (
     <Layout title="Creation d'une annonce">
@@ -55,6 +72,27 @@ export default function NewAd() {
               id="picture"
               required
               placeholder="https://imageshack.com/zoot.png"
+              value={imagePreviewUrl}
+              onChange={(e) => setImagePreviewUrl(e.target.value)}
+              className="input input-bordered w-full max-w-xs"
+            />
+            {imagePreviewUrl && (
+              <img src={imagePreviewUrl} alt="image preview" />
+            )}
+            <input
+              accept="image/*"
+              type="file"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                const formData = new FormData();
+                formData.append('file', file as Blob);
+                axios
+                  .post(
+                    process.env.NEXT_PUBLIC_UPLOAD_API_ENDPOINT as string,
+                    formData
+                  )
+                  .then((res) => setImagePreviewUrl(res.data.url));
+              }}
               className="input input-bordered w-full max-w-xs"
             />
           </div>
@@ -122,6 +160,14 @@ export default function NewAd() {
                 </option>
               ))}
             </select>
+            <Select
+              isMulti
+              name="colors"
+              options={options}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={(e) => setTags(e as any[])}
+            />
           </div>
         </div>
 

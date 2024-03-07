@@ -24,6 +24,8 @@ export default function adDetails() {
 
   const ad = data?.ad;
 
+  const category = ad?.category.name;
+
   const [deleteAd] = useDeleteAdMutation();
 
   const { data: currentUser } = useProfileQuery();
@@ -34,19 +36,36 @@ export default function adDetails() {
 
   return (
     <Layout title={ad?.title ? ad.title + ' - TGC' : 'The Good Corner'}>
-      <div className="pt-12 pb-12">
+      <div className="">
         <div className="p-6 bg-white shadow-lg rounded-2xl">
           {typeof ad === 'undefined' ? (
-            'Chargement...'
+            'chargement...'
           ) : (
             <div className="">
-              <div className="flex justify-between items-center">
-                <h1 className="text-3xl">{ad.title}</h1>
+              <div className="flex justify-between items-center mb-6">
+                <h1 className="text-3xl font-bold">{ad.title}</h1>
                 <p className="text-2xl">{ad.price} €</p>
               </div>
 
-              <img src={ad.picture} alt={ad.title} className="mt-6 mb-6" />
-              <p className="mt-6 mb-6">{ad.description}</p>
+              <div className="flex justify-center items-center">
+                <img
+                  src={ad.picture}
+                  alt={ad.title}
+                  className="max-h-96 rounded-lg mt-6 mb-6"
+                />
+              </div>
+
+              <div className="flex items-center justify-between">
+                <p className="font-bold mr-2">{category}</p>
+                <div className="flex items-center justify-items-center gap-2">
+                  {ad.tags.map((tag, index) => (
+                    <div className="flex items-center justify-items-center px-2 py-2 border border-gray-700 text-black rounded-full leading-none">
+                      <p key={index}>{tag.name}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="mt-3 mb-6">{ad.description}</p>
               <div className="flex justify-between mb-2">
                 <div className="flex items-center mt-3">
                   {ad.owner.avatar ? (
@@ -88,7 +107,9 @@ export default function adDetails() {
                         )
                       )
                         deleteAd({ variables: { adId: ad.id } })
-                          .then(() => router.push('/'))
+                          .then(() => {
+                            router.push('/').then(() => router.reload());
+                          })
                           .catch(console.error);
                     }}
                   >

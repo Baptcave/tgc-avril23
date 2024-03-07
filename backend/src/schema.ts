@@ -2,13 +2,14 @@ import { buildSchema } from 'type-graphql';
 import AdResolver from './resolvers/adResolver';
 import CategoryResolver from './resolvers/categoryResolver';
 import UserResolver from './resolvers/userResolver';
+import TagResolver from './resolvers/tagResolver';
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
 import env from './env';
 import { User } from './entities/user';
 
 export default buildSchema({
-  resolvers: [AdResolver, CategoryResolver, UserResolver],
+  resolvers: [AdResolver, CategoryResolver, UserResolver, TagResolver],
   authChecker: async ({ root, args, context, info }, roles = []) => {
     const cookies = cookie.parse(context.req.headers.cookie ?? '');
 

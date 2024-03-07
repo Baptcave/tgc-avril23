@@ -117,7 +117,7 @@ export default function Profile() {
 
       <section className="flex flex-wrap pb-24">
         {currentUser.profile?.ads.map((ad) => (
-          <AdCard key={ad.id} ad={ad} link={`/ads/${ad.id}`} />
+          <AdCard key={ad.id} ad={ad} link={`/ad/${ad.id}`} />
         ))}
       </section>
     </Layout>

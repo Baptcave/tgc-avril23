@@ -86,4 +86,7 @@ export class NewAdInput {
 
   @Field(() => ObjectId)
   category: ObjectId;
+
+  @Field(() => [ObjectId])
+  tags: ObjectId[];
 }
