@@ -46,6 +46,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tgc-avril23-staging-front
           build-args: |
             NEXT_PUBLIC_GRAPHQL_API_URL=https://api.staging.the-good-corner.duckdns.org
+            NEXT_PUBLIC_UPLOAD_API_ENDPOINT=https://files.staging.the-good-corner.duckdns.org/uploads
 
   notify:
     needs:
