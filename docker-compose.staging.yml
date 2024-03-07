@@ -34,5 +34,15 @@ services:
     ports:
       - 3001:3000
 
+  fileuploadservice:
+    image: scrip/image-upload-service
+    environment:
+      - PORT: 8000
+    ports:
+      - 8001:8000
+    volumes:
+      - uploadedFilesStaging: /app/files
+
 volumes:
   stagingDB:
+  uploadedFilesStaging:
