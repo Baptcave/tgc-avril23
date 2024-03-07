@@ -36,8 +36,8 @@ jobs:
         with:
           push: true
           build-args: |
-            "REACT_APP_GRAPHQL_API_URL=${{ inputs.graphql_api_url }}"
-            "NEXT_PUBLIC_UPLOAD_API_ENDPOINT=${{ inputs.fileupload_api_url }}"
+            REACT_APP_GRAPHQL_API_URL=${{ inputs.graphql_api_url }}
+            NEXT_PUBLIC_UPLOAD_API_ENDPOINT=${{ inputs.fileupload_api_url }}
           context: '{{defaultContext}}:frontend'
           file: 'Dockerfile.production'
           tags: ${{ inputs.image_name }}
