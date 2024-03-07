@@ -49,13 +49,13 @@ test('can view things', async ({ page }) => {
   }).save();
 
   await page.goto('/');
-  await page.getByRole("heading", { name: "Annonces Récentes" });
-  await expect(page.getByTestId("ads-list")).toContainText(peugeot.title)
-  await expect(page.getByTestId("ads-list")).toContainText(
+  await page.getByRole('heading', { name: 'Annonces Récente' });
+  await expect(page.getByTestId('ads-list')).toContainText(peugeot.title);
+  await expect(page.getByTestId('ads-list')).toContainText(
     peugeot.price.toString()
   );
-  await expect(page.getByTestId("ads-list")).toContainText(keyboard.title);
-  await expect(page.getByTestId("ads-list")).toContainText(
+  await expect(page.getByTestId('ads-list')).toContainText(keyboard.title);
+  await expect(page.getByTestId('ads-list')).toContainText(
     keyboard.price.toString()
   );
 });
