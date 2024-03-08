@@ -33,6 +33,8 @@ services:
     image: scrip/tgc-avril23-front
     ports:
       - 3000:3000
+    environment:
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-thekey}
 
   fileuploadservice:
     image : scrip/image-upload-service

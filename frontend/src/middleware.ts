@@ -1,17 +1,19 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { jwtVerify } from "jose";
-import { JWTPayload } from "./types";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { jwtVerify } from 'jose';
+import { JWTPayload } from './types';
 
 interface Payload {
   userId: number;
 }
 
-const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY || "";
+const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY || '';
 
 export default async function middleware(request: NextRequest) {
+  console.log({ JWT_PRIVATE_KEY });
+
   const { cookies } = request;
-  const token = cookies.get("token");
+  const token = cookies.get('token');
 
   return await checkToken(token?.value, request);
 }
@@ -26,7 +28,7 @@ export async function verify(token: string): Promise<Payload> {
 
 async function checkToken(token: string | undefined, request: NextRequest) {
   if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   try {
@@ -35,13 +37,13 @@ async function checkToken(token: string | undefined, request: NextRequest) {
     if (payload?.userId) {
       return NextResponse.next();
     }
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL('/login', request.url));
   } catch (err) {
-    console.error("Verification failed", err);
-    return NextResponse.redirect(new URL("/login", request.url));
+    console.error('Verification failed', err);
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/newAd", "/profile", "/editAd/:path*"],
+  matcher: ['/admin/:path*', '/newAd', '/profile', '/editAd/:path*'],
 };
