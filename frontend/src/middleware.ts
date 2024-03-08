@@ -10,12 +10,8 @@ interface Payload {
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY || '';
 
 export default async function middleware(request: NextRequest) {
-  console.log({ JWT_PRIVATE_KEY });
-
   const { cookies } = request;
   const token = cookies.get('token');
-  console.log({ token });
-
   return await checkToken(token?.value, request);
 }
 
