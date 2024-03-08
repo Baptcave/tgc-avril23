@@ -57,6 +57,7 @@ class UserResolver {
       httpOnly: true,
       secure: env.NODE_ENV === 'production',
       expires: new Date(Date.now() + oneMonth),
+      domain: env.NODE_ENV === 'production' ? env.COOKIE_DOMAIN : undefined,
     });
 
     return token;

@@ -1,6 +1,7 @@
 import { load } from 'ts-dotenv';
 
 export default load({
+  COOKIE_DOMAIN: { type: String, optional: true, default: 'localhost' },
   JWT_PRIVATE_KEY: String,
   CORS_ALLOWED_ORIGINS: String,
   NODE_ENV: ['production' as const, 'development' as const, 'test' as const],
