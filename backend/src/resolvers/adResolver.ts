@@ -40,7 +40,6 @@ class AdResolver {
         },
       },
     });
-    console.log({ tagIds, ownerId, categoryId, title, ads });
 
     return ads;
   }
