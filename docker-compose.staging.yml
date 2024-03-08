@@ -35,7 +35,9 @@ services:
     image: scrip/tgc-avril23-staging-front
     ports:
       - 3001:3000
-
+    environment:
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-thekey}
+      
   fileuploadservice-staging:
     image: scrip/image-upload-service
     environment:
