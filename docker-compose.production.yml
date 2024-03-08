@@ -13,6 +13,7 @@ services:
 
   backend:
     environment:
+      - COOKIE_DOMAIN=${COOKIE_DOMAIN:-the-good-corner.duckdns.org}
       - NODE_ENV=${NODE_ENV:-production}
       - DB_HOST=${DB_HOST:-db}
       - DB_USER=${DB_USER:-postgres}

@@ -15,6 +15,7 @@ services:
 
   backend-staging:
     environment:
+      - COOKIE_DOMAIN=${COOKIE_DOMAIN:-staging.the-good-corner.duckdns.org}
       - NODE_ENV=${NODE_ENV:-production}
       - DB_HOST=${DB_HOST:-db-staging}
       - DB_USER=${DB_USER:-postgres}
