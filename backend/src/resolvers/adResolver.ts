@@ -1,8 +1,12 @@
 import { Resolver, Query, Arg, Mutation, Authorized, Ctx } from 'type-graphql';
-import { Ad, NewAdInput } from '../entities/ad';
+import { Ad, NewAdInput, UpdateAdInput } from '../entities/ad';
 import { User } from '../entities/user';
 import { ContextType } from '../types';
-import { UnauthenticatedError, NotFoundError } from '../utils';
+import {
+  UnauthenticatedError,
+  NotFoundError,
+  UnauthaurizedError,
+} from '../utils';
 
 @Resolver()
 class AdResolver {
@@ -36,6 +40,29 @@ class AdResolver {
     return Ad.findOne({
       relations: { category: true, owner: true, tags: true },
       where: { id: newAd.id },
+    });
+  }
+
+  @Authorized()
+  @Mutation(() => Ad)
+  async updateAd(
+    @Arg('adId') id: number,
+    @Arg('data', { validate: true }) data: UpdateAdInput,
+    @Ctx() { currentUser }: ContextType
+  ) {
+    if (typeof currentUser === 'undefined') throw UnauthenticatedError();
+    const adToUpdate = await Ad.findOne({
+      where: { id },
+      relations: { owner: true, tags: true, category: true },
+    });
+    if (!adToUpdate) throw NotFoundError();
+    if (currentUser.role !== 'admin' && currentUser.id !== adToUpdate.owner.id)
+      throw UnauthaurizedError();
+    await Object.assign(adToUpdate, data);
+    await adToUpdate.save();
+    return Ad.findOne({
+      where: { id },
+      relations: { category: true, tags: true },
     });
   }
 

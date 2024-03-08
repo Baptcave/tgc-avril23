@@ -27,6 +27,12 @@ export class Category extends BaseEntity {
 @InputType()
 export class NewCategoryInput {
   @Field()
-  @Length(3, 50)
+  @Length(2, 30, { message: 'Le nom doit contenir entre 2 et 30 caractères' })
   name: string;
+}
+@InputType()
+export class UpdateCategoryInput {
+  @Field({ nullable: true })
+  @Length(2, 30, { message: 'Le nom doit contenir entre 2 et 30 caractères' })
+  name?: string;
 }
