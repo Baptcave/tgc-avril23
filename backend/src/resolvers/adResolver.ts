@@ -22,8 +22,8 @@ class AdResolver {
     @Arg('ownerId', () => Int, { nullable: true }) ownerId?: number,
     @Arg('title', { nullable: true }) title?: string
   ) {
-    return Ad.find({
-      relations: { category: true, tags: true },
+    const ads = await Ad.find({
+      relations: { category: true, tags: true, owner: true },
       where: {
         tags: {
           id:
@@ -40,6 +40,9 @@ class AdResolver {
         },
       },
     });
+    console.log({ tagIds, ownerId, categoryId, title, ads });
+
+    return ads;
   }
 
   @Query(() => Ad)
