@@ -20,12 +20,12 @@ describe('Category Resolver', () => {
 {
   "categories": [
     {
-      "id": 1,
-      "name": "automobile",
-    },
-    {
       "id": 2,
       "name": "sport",
+    },
+    {
+      "id": 1,
+      "name": "automobile",
     },
   ],
 }

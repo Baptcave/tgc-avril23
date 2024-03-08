@@ -59,38 +59,40 @@ describe('Ad Resolver', () => {
       }
     `);
 
-    expect(res.data).toMatchInlineSnapshot(`
+    expect(res).toMatchInlineSnapshot(`
 {
-  "ads": [
-    {
-      "category": {
-        "id": 1,
-        "name": "automobile",
-      },
-      "id": 1,
-      "location": "Paris",
-      "owner": {
-        "avatar": "https://www.shutterstock.com/image-vector/user-icon-trendy-flat-style-260nw-418179865.jpg",
-        "email": "user@test.com",
-        "id": 1,
-        "nickname": "user1",
-        "role": "visitor",
-      },
-      "picture": "https://img.leboncoin.fr/api/v1/lbcpb1/images/93/1a/c5/931ac53fb1e84de07b5e6d3993b7498634381c77.jpg?rule=ad-large",
-      "price": 80000,
-      "tags": [
-        {
+  "data": {
+    "ads": [
+      {
+        "category": {
           "id": 1,
-          "name": "tag1",
+          "name": "automobile",
         },
-        {
-          "id": 2,
-          "name": "tag2",
+        "id": 1,
+        "location": "Paris",
+        "owner": {
+          "avatar": "https://www.shutterstock.com/image-vector/user-icon-trendy-flat-style-260nw-418179865.jpg",
+          "email": "user@test.com",
+          "id": 1,
+          "nickname": "user1",
+          "role": "visitor",
         },
-      ],
-      "title": "Ferrari",
-    },
-  ],
+        "picture": "https://img.leboncoin.fr/api/v1/lbcpb1/images/93/1a/c5/931ac53fb1e84de07b5e6d3993b7498634381c77.jpg?rule=ad-large",
+        "price": 80000,
+        "tags": [
+          {
+            "id": 1,
+            "name": "tag1",
+          },
+          {
+            "id": 2,
+            "name": "tag2",
+          },
+        ],
+        "title": "Ferrari",
+      },
+    ],
+  },
 }
 `);
   });

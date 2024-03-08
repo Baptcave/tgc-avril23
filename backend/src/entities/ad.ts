@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { User } from './user';
 import { Tag } from './tag';
-import { Length } from 'class-validator';
+import { Length, Min } from 'class-validator';
 import { ObjectType, Field, Int, InputType } from 'type-graphql';
 import { Category } from './category';
 import { ObjectId } from '../utils';
@@ -86,4 +86,33 @@ export class NewAdInput {
 
   @Field(() => ObjectId)
   category: ObjectId;
+}
+
+@InputType()
+export class UpdateAdInput {
+  @Field({ nullable: true })
+  @Length(5, 50, { message: 'Le titre doit contenir entre 5 et 50 caractères' })
+  title?: string;
+
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field({ nullable: true })
+  @Min(0, { message: 'le prix doit etre positif' })
+  price?: number;
+
+  @Field({ nullable: true })
+  city?: string;
+
+  @Field({ nullable: true })
+  picture?: string;
+
+  @Field(() => ObjectId, { nullable: true })
+  category?: ObjectId;
+
+  @Field(() => [ObjectId], { nullable: true })
+  tags?: ObjectId[];
+
+  @Field({ nullable: true })
+  location?: string;
 }

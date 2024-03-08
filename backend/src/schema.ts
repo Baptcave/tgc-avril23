@@ -6,9 +6,10 @@ import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
 import env from './env';
 import { User } from './entities/user';
+import TagsResolver from './resolvers/tagsResolver';
 
 export default buildSchema({
-  resolvers: [AdResolver, CategoryResolver, UserResolver],
+  resolvers: [AdResolver, CategoryResolver, UserResolver, TagsResolver],
   authChecker: async ({ root, args, context, info }, roles = []) => {
     const cookies = cookie.parse(context.req.headers.cookie ?? '');
 
