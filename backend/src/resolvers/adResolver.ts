@@ -1,6 +1,4 @@
 import { Ad, NewAdInput, UpdateAdInput } from '../entities/ad';
-import { User } from '../entities/user';
-import { ContextType } from '../types';
 import {
   UnauthenticatedError,
   NotFoundError,
