@@ -45,6 +45,8 @@ class UserResolver {
       throw new Error('Invalid credentials');
     }
 
+    console.log('jwt', env.JWT_PRIVATE_KEY);
+
     const token = jwt.sign({ userId: user.id }, env.JWT_PRIVATE_KEY, {
       expiresIn: '30d',
     });
