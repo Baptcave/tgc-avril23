@@ -1,4 +1,3 @@
-import { Resolver, Query, Arg, Mutation, Authorized, Ctx } from 'type-graphql';
 import { Ad, NewAdInput, UpdateAdInput } from '../entities/ad';
 import { User } from '../entities/user';
 import { ContextType } from '../types';
@@ -7,12 +6,48 @@ import {
   NotFoundError,
   UnauthaurizedError,
 } from '../utils';
+import {
+  Resolver,
+  Query,
+  Arg,
+  Mutation,
+  Authorized,
+  Ctx,
+  Int,
+} from 'type-graphql';
+import { User } from '../entities/user';
+import { ContextType } from '../types';
+import { ILike, In } from 'typeorm';
 
 @Resolver()
 class AdResolver {
   @Query(() => [Ad])
-  async ads() {
-    return Ad.find({ relations: { category: true, owner: true, tags: true } });
+  async ads(
+    @Arg('tagsId', { nullable: true }) tagIds?: string,
+    @Arg('categoryId', () => Int, { nullable: true }) categoryId?: number,
+    @Arg('ownerId', () => Int, { nullable: true }) ownerId?: number,
+    @Arg('title', { nullable: true }) title?: string
+  ) {
+    const ads = await Ad.find({
+      relations: { category: true, tags: true, owner: true },
+      where: {
+        tags: {
+          id:
+            typeof tagIds === 'string' && tagIds.length > 0
+              ? In(tagIds.split(',').map((t) => parseInt(t, 10)))
+              : undefined,
+        },
+        title: title ? ILike(`%${title}%`) : undefined,
+        category: {
+          id: categoryId,
+        },
+        owner: {
+          id: ownerId,
+        },
+      },
+    });
+
+    return ads;
   }
 
   @Query(() => Ad)

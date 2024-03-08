@@ -1,11 +1,33 @@
-import { useCategoriesQuery } from '@/graphql/generated/schema';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import qs from 'query-string';
+import {
+  useCategoriesQuery,
+  useProfileQuery,
+} from '@/graphql/generated/schema';
+import { UserCircleIcon } from '@heroicons/react/solid';
 
 export default function Header() {
   const router = useRouter();
+
   const { data } = useCategoriesQuery();
   const categories = data?.categories || [];
+
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    if (typeof router.query.title === 'string') {
+      setSearch(router.query.title);
+    }
+  }, [router.query.title]);
+
+  const searchParams = qs.parse(window.location.search) as any;
+
+  const { data: currentUser, client } = useProfileQuery({
+    errorPolicy: 'ignore',
+  });
+  const isLoggedIn = !!currentUser?.profile;
 
   return (
     <header className="header">
@@ -20,12 +42,20 @@ export default function Header() {
           className="text-field-with-button"
           onSubmit={(e) => {
             e.preventDefault();
+            router.push(
+              `/search?${qs.stringify({
+                ...searchParams,
+                title: search,
+              })}`
+            );
           }}
         >
           <input
             className="text-field main-search-field text-gray-700"
             type="search"
+            value={search}
             placeholder="Rechercher.."
+            onChange={(e) => setSearch(e.target.value)}
           />
           <button className="button button-primary">
             <svg
@@ -43,6 +73,32 @@ export default function Header() {
             </svg>
           </button>
         </form>
+        {isLoggedIn && (
+          <>
+            <Link href="/newAd" className="button link-button">
+              <span className="mobile-short-label">Publier</span>
+              <span className="desktop-long-label">Publier une annonce</span>
+            </Link>
+            <Link href="/profile" className="cursor-pointer">
+              <img
+                height={35}
+                width={35}
+                className="avatar rounded-full"
+                src={currentUser.profile.avatar}
+                alt={currentUser.profile.nickname}
+              />
+            </Link>
+          </>
+        )}
+
+        {!isLoggedIn && (
+          <Link href="/login" className="button link-button">
+            <span className="mobile-short-label">
+              <UserCircleIcon height={30} width={30} />
+            </span>
+            <span className="desktop-long-label">Se connecter</span>
+          </Link>
+        )}
       </div>
       <nav className="flex pl-2 h-[54px]">
         {categories.map((cat) => {
@@ -55,7 +111,15 @@ export default function Header() {
               className={`p-2 rounded-lg mt-3 cursor-pointer ${
                 isActive ? 'bg-[#ffa41b] text-white' : ''
               }`}
-              onClick={() => {}}
+              onClick={() => {
+                router.push(
+                  '/search?' +
+                    qs.stringify({
+                      ...searchParams,
+                      categoryId: isActive ? undefined : cat.id,
+                    })
+                );
+              }}
               key={catName}
             >
               {catName}
